@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="shortcut icon" href="../static/my-library/img_lib/favicon.svg" type="image/x-icon">
+    <link rel="icon" href="../static/my-library/img_lib/favicon.svg" type="image/x-icon">
+    <title>Music App</title>
+</head>
+
+<body>
+
+<div class="menu_side">
+    <h1>Menu</h1>
+    <nav class="menu" >
+        <div class="menu_item active" onclick="navTo('homepage')">
+        <i class="bi bi-house-fill"></i>
+            Homepage
+        </div>
+        <div class="menu_item" onclick="navTo('my-library')">
+            <i class="bi bi-journal-album"></i>
+            My Library
+        </div>
+        <div class="menu_item" onclick="navTo('lyrics')">
+            <i class="bi bi-music-note-list"></i>
+            Lyric Search
+        </div>
+        <hr>
+        <h4 class="menu_item" onclick="displayLikedSongs()"><span></span><i class="bi bi-music-note-beamed"></i>Liked Songs</h4>
+        <h4 class="menu_item" onclick="displayLastPlayed()"><span></span><i class="bi bi-music-note-beamed"></i>Last Played</h4>
+        <a href="https://github.com/Innohub-Co-Projects/music-player" target="_blank">
+            <h4 class="menu_item"><span></span><i class="bi bi-music-note-beamed"></i>GitHub</h4>
+        </a>
+    </nav>
+
+    <div class="lang_indicator">
+        <span>Lang: English</span>
+        <div class="lang_dropup" id="dropup">
+            <span>hindi</span>
+            <span>english</span>
+            <span>punjabi</span>
+            <span>tamil</span>
+            <span>telugu</span>
+            <span>marathi</span>
+            <span>gujarati</span>
+            <span>bengali</span>
+            <span>kannada</span>
+            <span>bhojpuri</span>
+            <span>malayalam</span>
+            <span>urdu</span>
+            <span>haryanvi</span>
+            <span>rajasthani</span>
+            <span>odia</span>
+            <span>assamese</span>
+        </div>
+    </div>
+</div>
+
+<div class="song_side">
+    <nav>
+        <h3 id="section_title">Homepage</h3>
+        <div class="search">
+            <i class="bi bi-search"></i>
+            <form id="search_form">
+                <input type="text" placeholder="Search Music...">
+                <input type="submit" hidden>
+            </form>
+        </div>
+        <div class="user">
+            <a href="http://127.0.0.1:5000/camera">
+                <img src={{url_for('path_fd',path='../static/assets/profile_icon.jpg')}} alt="User" title="Facial Emotion" ></img>
+            </a> 
+        </div>
+    </nav>
+
+    <iframe src="{{ url_for('page', name_page='homepage') }}" frameborder="0" id="my-iframe"></iframe>
+
+    {% set tam = None %}
+    {% if final_output  %}
+        {% if final_output == "Angry" %}
+        {% set tam = "search-angry" %}
+        {% elif final_output == "Disgusted" %}
+        {% set tam = "search-dis" %}
+        {% elif final_output == "Fearful" %}
+        {% set tam = "search-fear" %}
+        {% elif final_output == "Happy" %}
+        {% set tam = "search-happy" %}
+        {% elif final_output == "Neutral" %}
+        {% set tam = "search-neutral" %}
+        {% elif final_output == "Sad" %}
+        {% set tam = "search-sad" %}
+        {% elif final_output == "Surprised" %}
+        {% set tam = "search-surp" %}
+        {% endif %}
+        
+        {% if tam %}
+        <script> 
+            let iframe = document.querySelector("iframe");
+            iframe.addEventListener("load", function() {
+                let iframe_functions = iframe.contentWindow;
+                console.log("thanhf coong")
+                },
+                { once: true }
+            );
+
+            iframe.src = "{{ url_for('page', name_page=tam) }}";
+        </script>
+        {% endif %}
+      
+    {% endif %}
+</div>
+
+<div class="master_play">
+    <div class="wave">
+        <div class="wave1"></div>
+        <div class="wave1"></div>
+        <div class="wave1"></div>
+    </div>
+
+    <img id="poster_master_play">
+    <h5 id="title">Loading<br>
+        <div class="subtitle"></div>
+    </h5>
+
+    <div class="icon">
+        <i class="bi bi-skip-start-fill" id="back"></i>
+        <i class="bi bi-play-fill" id="masterPlay"></i>
+        <i class="bi bi-skip-end-fill" id="next"></i>
+    </div>
+
+    <span id="currentStart">0:00</span>
+    <div class="bar">
+        <input type="range" id="seek" min="0" value="0" max="100">
+        <div class="bar2" id="bar2"></div>
+        <div class="dot"></div>
+    </div>
+    <span id="currentEnd">0:00</span>
+
+    <div class="vol">
+        <i class="bi bi-volume-up-fill" id="vol_icon"></i>
+        <input type="range" id="vol" min="0" value="30" max="100">
+        <div class="vol_bar"></div>
+        <div class="dot" id="vol_dot"></div>
+    </div>
+</div>
+
+<div class="nav_bar">
+    <i class="bi bi-house-fill" onclick="navTo('homepage');"></i>
+    <i class="bi bi-journal-album" onclick="navTo('my-library');"></i>
+    <i class="bi bi-music-note-list" onclick="navTo('lyrics');"></i>
+    <div class="nav_dropup_container">
+        <i id="more_button" class="bi bi-list"></i>
+        <div class="nav_dropup" id="dropup">
+            <span onclick="displayLikedSongs()">Liked Songs</span>
+            <span onclick="displayLastPlayed()">Last Played</span>
+            <a href="https://github.com/Innohub-Co-Projects/music-player" target="_blank" style="color: white;">
+                <span>GitHub</span>
+            </a>
+            <div>
+                <span id="lang_select">Language Select</span>
+                <div class="lang_dropup" id="dropup">
+                    <span>hindi</span>
+                    <span>english</span>
+                    <span>punjabi</span>
+                    <span>tamil</span>
+                    <span>telugu</span>
+                    <span>marathi</span>
+                    <span>gujarati</span>
+                    <span>bengali</span>
+                    <span>kannada</span>
+                    <span>bhojpuri</span>
+                    <span>malayalam</span>
+                    <span>urdu</span>
+                    <span>haryanvi</span>
+                    <span>rajasthani</span>
+                    <span>odia</span>
+                    <span>assamese</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="../static/js/script.js" type="module"></script>
+
+<script>
+    let iframe = document.querySelector("iframe");
+    function displayListView(type, api_id) {
+        iframe.addEventListener("load", function (){
+                let frame_functions = iframe.contentWindow;
+                if (type == "playlist") {
+                    frame_functions.generateFromPlaylistID(api_id);
+                } else if (type == "album") {
+                    frame_functions.generateFromAlbumID(api_id);
+                } else {
+                    console.error("Invalid list view type: " + type);
+                }
+            },
+            { once: true }
+        );
+    
+        iframe.src = "{{ url_for('page', name_page='listview') }}";
+    }
+    window.displayListView = displayListView;
+    
+    function displayLikedSongs() {
+        iframe.addEventListener("load", function () {
+                iframe.contentWindow.generateFromLikedSongs();
+            },
+            { once: true }
+        );
+    
+        iframe.src = "{{ url_for('page', name_page='listview') }}"; 
+    }
+    window.displayLikedSongs = displayLikedSongs;
+    
+    function displayLastPlayed() {
+        iframe.addEventListener("load", function () {
+                iframe.contentWindow.generateFromLastPlayed();
+            },
+            { once: true }
+        );
+    
+        iframe.src = "{{ url_for('page', name_page='listview') }}";
+    }
+    window.displayLastPlayed = displayLastPlayed;
+</script>
+
+</body>
+
+</html>
