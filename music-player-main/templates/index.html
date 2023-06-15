@@ -16,15 +16,15 @@
 <div class="menu_side">
     <h1>Menu</h1>
     <nav class="menu" >
-        <div class="menu_item active" onclick="navTo('homepage')">
+        <div class="menu_item active" onclick="navTo('homepage.html')">
         <i class="bi bi-house-fill"></i>
             Homepage
         </div>
-        <div class="menu_item" onclick="navTo('my-library')">
+        <div class="menu_item" onclick="navTo('my-library.html')">
             <i class="bi bi-journal-album"></i>
             My Library
         </div>
-        <div class="menu_item" onclick="navTo('lyrics')">
+        <div class="menu_item" onclick="navTo('lyrics.html')">
             <i class="bi bi-music-note-list"></i>
             Lyric Search
         </div>
@@ -70,13 +70,14 @@
             </form>
         </div>
         <div class="user">
-            <a href="http://127.0.0.1:5000/camera">
-                <img src={{url_for('path_fd',path='../static/assets/profile_icon.jpg')}} alt="User" title="Facial Emotion" ></img>
-            </a> 
+            <a  href="http://127.0.0.1:5000/camera">
+                <img src={{url_for('path_fd',path='../static/assets/profile_icon.jpg')}} alt="User" 
+                title="Facial Emotion"></img>
+            </a>
         </div>
     </nav>
 
-    <iframe src="{{ url_for('page', name_page='homepage') }}" frameborder="0" id="my-iframe"></iframe>
+    <iframe src="homepage.html" frameborder="0" id="my-iframe"></iframe>
 
     {% set tam = None %}
     {% if final_output  %}
@@ -106,7 +107,7 @@
                 { once: true }
             );
 
-            iframe.src = "{{ url_for('page', name_page=tam) }}";
+            iframe.src = "{{ url_for('page', name_page=tam +'.html') }}";
         </script>
         {% endif %}
       
@@ -148,9 +149,9 @@
 </div>
 
 <div class="nav_bar">
-    <i class="bi bi-house-fill" onclick="navTo('homepage');"></i>
-    <i class="bi bi-journal-album" onclick="navTo('my-library');"></i>
-    <i class="bi bi-music-note-list" onclick="navTo('lyrics');"></i>
+    <i class="bi bi-house-fill" onclick="navTo('homepage.html');"></i>
+    <i class="bi bi-journal-album" onclick="navTo('my-library.html');"></i>
+    <i class="bi bi-music-note-list" onclick="navTo('lyrics.html');"></i>
     <div class="nav_dropup_container">
         <i id="more_button" class="bi bi-list"></i>
         <div class="nav_dropup" id="dropup">
@@ -186,48 +187,7 @@
 
 <script src="../static/js/script.js" type="module"></script>
 
-<script>
-    let iframe = document.querySelector("iframe");
-    function displayListView(type, api_id) {
-        iframe.addEventListener("load", function (){
-                let frame_functions = iframe.contentWindow;
-                if (type == "playlist") {
-                    frame_functions.generateFromPlaylistID(api_id);
-                } else if (type == "album") {
-                    frame_functions.generateFromAlbumID(api_id);
-                } else {
-                    console.error("Invalid list view type: " + type);
-                }
-            },
-            { once: true }
-        );
-    
-        iframe.src = "{{ url_for('page', name_page='listview') }}";
-    }
-    window.displayListView = displayListView;
-    
-    function displayLikedSongs() {
-        iframe.addEventListener("load", function () {
-                iframe.contentWindow.generateFromLikedSongs();
-            },
-            { once: true }
-        );
-    
-        iframe.src = "{{ url_for('page', name_page='listview') }}"; 
-    }
-    window.displayLikedSongs = displayLikedSongs;
-    
-    function displayLastPlayed() {
-        iframe.addEventListener("load", function () {
-                iframe.contentWindow.generateFromLastPlayed();
-            },
-            { once: true }
-        );
-    
-        iframe.src = "{{ url_for('page', name_page='listview') }}";
-    }
-    window.displayLastPlayed = displayLastPlayed;
-</script>
+
 
 </body>
 

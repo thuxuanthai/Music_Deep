@@ -22,7 +22,7 @@ async function fetchJSON(url) {
     }
 }
 
-import { getLanguageString } from '../js/language.js'
+import { getLanguageString } from './language.js'
 
 // fetches homepage data
 // contains the following attributes: albums, charts, playlist and trending

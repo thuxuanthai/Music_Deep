@@ -41,7 +41,7 @@ window.setSectionTitle = setSectionTitle;
 function showBackButton() {
     let back_button = document.createElement('div');
     back_button.className = 'back_button';
-    back_button.addEventListener('click', () => { navTo('homepage'); });
+    back_button.addEventListener('click', () => { navTo('homepage.html'); });
 
     let icon = document.createElement('i');
     icon.className = 'bi bi-arrow-left-square';
@@ -208,7 +208,8 @@ function displayListView(type, api_id) {
         { once: true }
     );
 
-    iframe.src = "{{ url_for('page',name_page='listview') }}";
+    navTo("listview.html")
+    // iframe.src = '../../templates/listview.html';
 }
 window.displayListView = displayListView;
 
@@ -219,7 +220,7 @@ function displayLikedSongs() {
         { once: true }
     );
 
-    iframe.src = "{{ url_for('page',name_page='listview') }}";
+    navTo("listview.html")
 }
 window.displayLikedSongs = displayLikedSongs;
 
@@ -231,7 +232,7 @@ function searchFor(search_query) {
         { once: true }
     );
 
-    navTo("search");
+    navTo("search.html");
 }
 
 function displayLastPlayed() {
@@ -241,7 +242,7 @@ function displayLastPlayed() {
         { once: true }
     );
 
-    iframe.src = "{{ url_for('page',name_page='listview') }}";
+    navTo("listview.html")
 }
 window.displayLastPlayed = displayLastPlayed;
 

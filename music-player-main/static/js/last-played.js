@@ -8,14 +8,14 @@ function getLastPlayedSongs() {
     if (song_str == undefined) {
         return [{
             id: 'local',
-            image: [{link: '../assets/rickroll.jpg'}, {link: '../assets/rickroll.jpg'}, {link: '../assets/rickroll.jpg'}],
+            image: [{link: '../static/assets/rickroll.jpg'}, {link: '../static/assets/rickroll.jpg'}, {link: '../static/assets/rickroll.jpg'}],
             name: 'Never Gonna Give You Up',
             primaryArtists: 'Rick Astley',
             album: { name: 'Whenever You Need Somebody', id: 26553699 },
             playCount: 211000,
             duration: 213,
-            downloadUrl: [{link: '../assets/rickroll.mp3'}, {link: '../assets/rickroll.mp3'},
-                          {link: '../assets/rickroll.mp3'}, {link: '../assets/rickroll.mp3'}]
+            downloadUrl: [{link: '../static/assets/rickroll.mp3'}, {link: '../static/assets/rickroll.mp3'},
+                          {link: '../static/assets/rickroll.mp3'}, {link: '../static/assets/rickroll.mp3'}]
         }]
     };
 
